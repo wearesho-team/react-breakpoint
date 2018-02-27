@@ -1,0 +1,85 @@
+{
+  "name": "react-breakpoint",
+  "version": "1.0.0",
+  "description": "Responsive breakpoints for React",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=tsconfig.json ./node_modules/.bin/nyc mocha -r jsdom-global/register -r ts-node/register -r source-map-support/register tests/bootstrap.ts tests/**/*-specs.tsx",
+    "build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack",
+    "coverage": "./node_modules/.bin/nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "lint": "./node_modules/.bin/tslint --project .",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wearesho-team/react-breakpoint.git"
+  },
+  "keywords": [
+    "react",
+    "breakpoint",
+    "break",
+    "breakpoints",
+    "responsive"
+  ],
+  "author": "Alexander <horat1us>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wearesho-team/react-breakpoint/issues"
+  },
+  "homepage": "https://github.com/wearesho-team/react-breakpoint#readme",
+  "devDependencies": {
+    "@types/chai": "^4.1.2",
+    "@types/enzyme": "^3.1.9",
+    "@types/mocha": "^2.2.48",
+    "@types/react": "^16.0.38",
+    "awesome-typescript-loader": "^3.5.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
+    "clean-webpack-plugin": "^0.1.18",
+    "codecov": "^3.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jsdom": "^11.6.2",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^5.0.1",
+    "nyc": "^11.4.1",
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "source-map-loader": "^0.2.3",
+    "source-map-support": "^0.5.3",
+    "ts-node": "^5.0.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2",
+    "webpack": "^4.0.1",
+    "webpack-node-externals": "^1.6.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.0.0",
+    "prop-types": "^15.6.0"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude:": [
+      "**/*.d.ts",
+      "webpack.config.js",
+      "codecept.conf.js",
+      "tests"
+    ],
+    "reporter": [
+      "clover",
+      "text-summary"
+    ],
+    "report-dir": "./tests/output"
+  },
+  "pre-commit": [
+    "lint",
+    "test"
+  ]
+}
