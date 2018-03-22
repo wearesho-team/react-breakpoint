@@ -8,7 +8,7 @@ export interface SmartBreakpointProps {
 
 export const SmartBreakpointPropTypes = {
     match: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    delay: PropTypes.number,
+    delay: PropTypes.number
 };
 
 export interface SmartBreakpointState {
@@ -17,48 +17,53 @@ export interface SmartBreakpointState {
 
 export class SmartBreakpoint extends React.Component<SmartBreakpointProps, SmartBreakpointState> {
     public static propTypes = SmartBreakpointPropTypes;
-    public readonly state: SmartBreakpointState = {
-        matches: false,
-    };
+
     public timer: any;
+
+    constructor(props) {
+        super(props);
+
+        if (!this.props.delay) {
+            this.state = {
+                matches: this.isMatch
+            };
+        } else {
+            this.state = {
+                matches: false
+            };
+
+            clearTimeout(this.timer);
+            this.timer = setTimeout(() => {
+                this.setState({
+                    matches: this.isMatch
+                });
+            }, this.props.delay);
+        }
+    }
 
     public componentDidMount() {
         window.addEventListener("resize", this.handleResize);
-
-        if (this.props.delay) {
-            clearTimeout(this.timer);
-            this.timer = setTimeout(this.handleResize);
-        } else {
-            this.handleResize();
-        }
     }
 
     public componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize);
-        clearTimeout(this.timer);
     }
 
     public render(): any {
-        if (!this.state.matches) {
-            return null;
-        }
-
-        return this.props.children;
+        return this.state.matches && this.props.children;
     }
 
     protected handleResize = () => {
-        const matches = this.isMatch;
-
-        if (matches === this.state.matches) {
+        if (this.isMatch === this.state.matches) {
             return;
         }
 
         this.setState({
-            matches,
+            matches: this.isMatch
         });
     }
 
     private get isMatch(): boolean {
-        return this.props.match.every((query: string) => window.matchMedia(`(${query})`).matches)
+        return this.props.match.every((query: string) => window.matchMedia(`(${query})`).matches);
     }
 }
