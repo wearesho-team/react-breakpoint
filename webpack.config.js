@@ -9,92 +9,91 @@ const
 
 const debug = process.env.NODE_ENV !== 'production';
 const env = debug ? 'local' : 'production';
-const packageJson = require('./package.json');
 
-console.log(`Building ${packageJson.name} ${packageJson.version} in ${env} environment.`);
+console.log("Building in " + env + " environment. Debug: " + debug.toString());
 
 const config = {
-    entry: ["./src/index.ts"],
-    target: "node",
-    externals: [nodeExternals()],
+        entry: ["./src/index.ts"],
+        target: "node",
+        externals: [nodeExternals()],
 
-    output: {
-        filename: 'index.js',
-        path: path.resolve('./build'),
-        publicPath: "/",
-        library: packageJson.name,
-        libraryTarget: "umd",
-    },
+        output: {
+            filename: 'index.js',
+            path: path.resolve('./build'),
+            publicPath: "/",
+            library: "react-criteria-table",
+            libraryTarget: "umd",
+        },
 
-    devtool: debug ? "source-map" : false,
+        devtool: debug ? "source-map" : false,
 
-    resolve: {
-        extensions: [".ts", ".js", ".json", ".jsx", ".tsx",],
-        modules: [
-            path.resolve('node_modules'),
-            path.resolve('src'),
-        ],
-    },
+        resolve: {
+            extensions: [".ts", ".js", ".json", ".jsx", ".tsx",],
+            modules: [
+                path.resolve('node_modules'),
+                path.resolve('src'),
+            ],
+        },
 
-    module: {
-        loaders: [
-            {
-                test: /\.tsx?$/,
-                loaders: [
-                    {
-                        loader: "babel-loader",
-                        query: {
-                            presets: [
-                                'react',
-                                ['env', {
-                                    "targets": {
-                                        "browsers": ["last 2 versions", "safari >= 10", "ie >= 11"]
-                                    }
-                                }]
-                            ],
-                            "plugins": ["transform-object-rest-spread"]
-                        }
-                    },
-                    "awesome-typescript-loader"
-                ]
-            },
-            {
-                test: /\.jsx?$/,
-                exclude:
-                    [/node_modules/],
-                loader:
-                    "babel-loader",
-                query: {
-                    presets: [
-                        'react',
-                        ['env', {
-                            "targets": {
-                                "browsers": ["last 2 versions", "safari >= 10", "ie >= 11"]
+        module: {
+            loaders: [
+                {
+                    test: /\.tsx?$/,
+                    loaders: [
+                        {
+                            loader: "babel-loader",
+                            query: {
+                                presets: [
+                                    'react',
+                                    ['env', {
+                                        "targets": {
+                                            "browsers": ["last 2 versions", "safari >= 10", "ie >= 11"]
+                                        }
+                                    }]
+                                ],
+                                "plugins": ["transform-object-rest-spread"]
                             }
-                        }]
-                    ],
-                    "plugins": ["transform-object-rest-spread"]
+                        },
+                        "awesome-typescript-loader"
+                    ]
+                },
+                {
+                    test: /\.jsx?$/,
+                    exclude:
+                        [/node_modules/],
+                    loader:
+                        "babel-loader",
+                    query: {
+                        presets: [
+                            'react',
+                            ['env', {
+                                "targets": {
+                                    "browsers": ["last 2 versions", "safari >= 10", "ie >= 11"]
+                                }
+                            }]
+                        ],
+                        "plugins": ["transform-object-rest-spread"]
+                    }
+                },
+                {
+                    enforce: "pre",
+                    test: /\.js$/,
+                    loader: "source-map-loader"
                 }
-            },
-            {
-                enforce: "pre",
-                test: /\.js$/,
-                loader: "source-map-loader"
-            }
-        ]
-    },
+            ]
+        },
 
-    plugins: [
-        new webpack.NamedModulesPlugin(),
-        new CleanWebpackPlugin(path.resolve('./build')),
-        new webpack.optimize.ModuleConcatenationPlugin(),
-        new webpack.NodeEnvironmentPlugin(),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify(env)
-            }
-        })
-    ]
-};
+        plugins: [
+            new webpack.NamedModulesPlugin(),
+            new CleanWebpackPlugin(path.resolve('./build')),
+            new webpack.optimize.ModuleConcatenationPlugin(),
+            new webpack.NodeEnvironmentPlugin(),
+            new webpack.DefinePlugin({
+                'process.env': {
+                    'NODE_ENV': JSON.stringify(env)
+                }
+            })
+        ]
+    };
 
 module.exports = config;
