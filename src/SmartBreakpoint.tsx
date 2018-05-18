@@ -1,5 +1,8 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
+import { StyledComponentClass } from "styled-components";
+
+import { createMediaWrapper } from "./helpers/createMediaWrapper";
 
 export interface SmartBreakpointProps {
     match: Array<string>;
@@ -22,6 +25,8 @@ export class SmartBreakpoint extends React.Component<SmartBreakpointProps, Smart
     public readonly state: SmartBreakpointState = {
         matches: true
     };
+
+    public MediaWrapper = createMediaWrapper(this.props.match);
 
     public componentDidMount() {
         addEventListener("resize", this.handleResize);
@@ -49,8 +54,16 @@ export class SmartBreakpoint extends React.Component<SmartBreakpointProps, Smart
         removeEventListener("resize", this.handleResize);
     }
 
-    public render(): any {
-        return this.state.matches && this.props.children;
+    public render(): React.ReactNode {
+        if (!this.state.matches) {
+            return null;
+        }
+
+        return (
+            <this.MediaWrapper>
+                {this.props.children}
+            </this.MediaWrapper>
+        );
     }
 
     protected handleResize = (): void => {

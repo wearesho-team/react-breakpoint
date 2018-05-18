@@ -91,5 +91,8 @@
   "pre-commit": [
     "lint",
     "test"
-  ]
+  ],
+  "dependencies": {
+    "styled-components": "^3.2.6"
+  }
 }
