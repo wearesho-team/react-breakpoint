@@ -65,11 +65,13 @@
     "typescript": "^2.4.2",
     "webpack": "3.6.0",
     "webpack-node-externals": "^1.6.0",
-    "webpack-plugin-critical": "^1.0.0"
+    "webpack-plugin-critical": "^1.0.0",
+    "styled-components": "^3.2.6"
   },
   "peerDependencies": {
     "react": ">=16.0.0",
-    "prop-types": "^15.6.0"
+    "prop-types": "^15.6.0",
+    "styled-components": "^3.2.6"
   },
   "nyc": {
     "extension": [
@@ -91,8 +93,5 @@
   "pre-commit": [
     "lint",
     "test"
-  ],
-  "dependencies": {
-    "styled-components": "^3.2.6"
-  }
+  ]
 }
