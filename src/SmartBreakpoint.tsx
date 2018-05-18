@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 
 export interface SmartBreakpointProps {
-    match: string[];
+    match: Array<string>;
     delay?: number;
 }
 
@@ -19,41 +19,41 @@ export class SmartBreakpoint extends React.Component<SmartBreakpointProps, Smart
     public static propTypes = SmartBreakpointPropTypes;
 
     public timer: any;
-
-    constructor(props) {
-        super(props);
-
-        if (!this.props.delay) {
-            this.state = {
-                matches: this.isMatch
-            };
-        } else {
-            this.state = {
-                matches: false
-            };
-
-            clearTimeout(this.timer);
-            this.timer = setTimeout(() => {
-                this.setState({
-                    matches: this.isMatch
-                });
-            }, this.props.delay);
-        }
-    }
+    public readonly state: SmartBreakpointState = {
+        matches: true
+    };
 
     public componentDidMount() {
-        window.addEventListener("resize", this.handleResize);
+        addEventListener("resize", this.handleResize);
+
+        if (!this.props.delay) {
+            return this.setState({
+                matches: this.isMatch
+            });
+        }
+
+        this.setState({
+            matches: false
+        });
+
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+            this.setState({
+                matches: this.isMatch
+            });
+        }, this.props.delay);
+
     }
 
     public componentWillUnmount() {
-        window.removeEventListener("resize", this.handleResize);
+        removeEventListener("resize", this.handleResize);
     }
 
     public render(): any {
         return this.state.matches && this.props.children;
     }
 
-    protected handleResize = () => {
+    protected handleResize = (): void => {
         if (this.isMatch === this.state.matches) {
             return;
         }

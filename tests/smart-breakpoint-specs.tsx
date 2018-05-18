@@ -5,7 +5,7 @@ import { mount, ReactWrapper } from "enzyme";
 import { SmartBreakpointProps, SmartBreakpoint } from "../src/SmartBreakpoint";
 
 const mock = (matches: boolean) => {
-    window['matchMedia'] = () => ({ matches, } as any);
+    window.matchMedia = () => ({ matches } as any);
 }
 
 describe("<SmartBreakpoint />", () => {
@@ -21,11 +21,11 @@ describe("<SmartBreakpoint />", () => {
         expect(wrapper.children()).to.have.length(0);
     });
 
-    it('should render children if media query matches', () => {
-        expect(wrapper.children()).to.have.length(0);
+    it("should render children if media query matches", () => {
+        expect(wrapper.getDOMNode()).to.not.exist;
         mock(true);
         wrapper.unmount().mount();
-        expect(wrapper.children()).to.have.length(1);
+        expect(wrapper.getDOMNode()).to.exist;
     });
 
     // Add tests with timer-mocking
