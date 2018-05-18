@@ -1,6 +1,6 @@
 {
   "name": "react-breakpoint",
-  "version": "1.0.0",
+  "version": "1.0.1-0",
   "description": "Responsive breakpoints for React",
   "main": "build/index.js",
   "scripts": {
