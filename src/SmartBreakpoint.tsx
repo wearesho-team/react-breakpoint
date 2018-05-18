@@ -1,8 +1,11 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
+import { StyledComponentClass } from "styled-components";
+
+import { createMediaWrapper } from "./helpers/createMediaWrapper";
 
 export interface SmartBreakpointProps {
-    match: string[];
+    match: Array<string>;
     delay?: number;
 }
 
@@ -19,41 +22,51 @@ export class SmartBreakpoint extends React.Component<SmartBreakpointProps, Smart
     public static propTypes = SmartBreakpointPropTypes;
 
     public timer: any;
+    public readonly state: SmartBreakpointState = {
+        matches: true
+    };
 
-    constructor(props) {
-        super(props);
-
-        if (!this.props.delay) {
-            this.state = {
-                matches: this.isMatch
-            };
-        } else {
-            this.state = {
-                matches: false
-            };
-
-            clearTimeout(this.timer);
-            this.timer = setTimeout(() => {
-                this.setState({
-                    matches: this.isMatch
-                });
-            }, this.props.delay);
-        }
-    }
+    public MediaWrapper = createMediaWrapper(this.props.match);
 
     public componentDidMount() {
-        window.addEventListener("resize", this.handleResize);
+        addEventListener("resize", this.handleResize);
+
+        if (!this.props.delay) {
+            return this.setState({
+                matches: this.isMatch
+            });
+        }
+
+        this.setState({
+            matches: false
+        });
+
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+            this.setState({
+                matches: this.isMatch
+            });
+        }, this.props.delay);
+
     }
 
     public componentWillUnmount() {
-        window.removeEventListener("resize", this.handleResize);
+        removeEventListener("resize", this.handleResize);
     }
 
-    public render(): any {
-        return this.state.matches && this.props.children;
+    public render(): React.ReactNode {
+        if (!this.state.matches) {
+            return null;
+        }
+
+        return (
+            <this.MediaWrapper>
+                {this.props.children}
+            </this.MediaWrapper>
+        );
     }
 
-    protected handleResize = () => {
+    protected handleResize = (): void => {
         if (this.isMatch === this.state.matches) {
             return;
         }
