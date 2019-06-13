@@ -1,13 +1,9 @@
 import * as React from "react";
 
-import { SmartBreakpoint } from "./SmartBreakpoint";
+import { Smart } from "./Smart";
 
-export class OnTablet extends React.Component {
-    public render(): React.ReactNode {
-        return (
-            <SmartBreakpoint match={["min-width: 768px", "max-width: 1023px"]}>
-                {this.props.children}
-            </SmartBreakpoint>
-        );
-    }
-}
+export const OnTablet: React.FunctionComponent = (props) => (
+    <Smart match={["min-width: 768px", "max-width: 1023px"]}>
+        {props.children}
+    </Smart>
+);

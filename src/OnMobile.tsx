@@ -1,13 +1,9 @@
 import * as React from "react";
 
-import { SmartBreakpoint } from "./SmartBreakpoint";
+import { Smart } from "./Smart";
 
-export class OnMobile extends React.Component {
-    public render(): React.ReactNode {
-        return (
-            <SmartBreakpoint match={["max-width: 767px"]}>
-                {this.props.children}
-            </SmartBreakpoint>
-        );
-    }
-}
+export const OnMobile: React.FunctionComponent = (props) => (
+    <Smart match={["max-width: 767px"]}>
+        {props.children}
+    </Smart>
+);

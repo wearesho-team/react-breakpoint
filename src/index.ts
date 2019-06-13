@@ -1,4 +1,4 @@
-export * from "./SmartBreakpoint";
+export * from "./Smart";
 export * from "./OnTabletDesktop";
 export * from "./OnMobileTablet";
 export * from "./OnDesktop";

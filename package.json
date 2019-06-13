@@ -4,9 +4,7 @@
   "description": "Responsive breakpoints for React",
   "main": "build/index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=tsconfig.json ./node_modules/.bin/nyc mocha -r jsdom-global/register -r ts-node/register -r source-map-support/register tests/bootstrap.ts tests/**/*-specs.tsx",
-    "build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack",
-    "coverage": "./node_modules/.bin/nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "build": "NODE_ENV=production ./node_modules/.bin/webpack -p",
     "lint": "./node_modules/.bin/tslint --project .",
     "prepublishOnly": "npm run build"
   },
@@ -28,70 +26,31 @@
   },
   "homepage": "https://github.com/wearesho-team/react-breakpoint#readme",
   "devDependencies": {
-    "@types/chai": "^4.0.3",
-    "@types/enzyme": "^2.8.6",
-    "@types/mocha": "^2.2.41",
-    "@types/node": "^8.0.47",
-    "@types/prop-types": "^15.5.2",
-    "@types/react": "^16.0.31",
+    "@types/node": "^10.14.9",
+    "@types/react": "^16.8.20",
     "@types/sinon": "^2.3.3",
-    "awesome-typescript-loader": "^3.2.2",
+    "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-loader": "^8.0.6",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-regenerator-runtime": "^6.5.0",
-    "chai": "^4.1.1",
     "clean-webpack-plugin": "^0.1.16",
-    "codecov": "^2.3.0",
-    "cross-env": "^5.0.5",
-    "enzyme": "^3.2.0",
-    "enzyme-adapter-react-16": "^1.0.0",
-    "jsdom": "11.1.0",
-    "jsdom-global": "3.0.2",
-    "mocha": "^3.5.0",
-    "nyc": "^11.1.0",
-    "pre-commit": "^1.2.2",
-    "prop-types": "^15.6.0",
-    "react": "16.2.0",
-    "react-dom": "^16.2.0",
-    "react-test-renderer": "^15.6.1",
-    "sinon": "^3.2.1",
-    "source-map-loader": "^0.2.1",
-    "ts-node": "^3.3.0",
-    "tslint": "5.6.0",
-    "tslint-react": "^3.2.0",
-    "typescript": "^2.4.2",
-    "webpack": "3.6.0",
-    "webpack-node-externals": "^1.6.0",
-    "webpack-plugin-critical": "^1.0.0",
-    "styled-components": "^3.2.6"
+    "react": "^16.8.6",
+    "source-map-loader": "^0.2.4",
+    "tslint": "^5.17.0",
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.5.2",
+    "webpack": "^4.34.0",
+    "webpack-cli": "^3.3.4",
+    "webpack-node-externals": "^1.6.0"
   },
   "peerDependencies": {
-    "react": ">=16.0.0",
-    "prop-types": "^15.6.0",
-    "styled-components": "^3.2.6"
+    "react": "^16.8.6"
   },
-  "nyc": {
-    "extension": [
-      ".ts",
-      ".tsx"
-    ],
-    "exclude:": [
-      "**/*.d.ts",
-      "webpack.config.js",
-      "codecept.conf.js",
-      "tests"
-    ],
-    "reporter": [
-      "clover",
-      "text-summary"
-    ],
-    "report-dir": "./tests/output"
-  },
-  "pre-commit": [
-    "lint",
-    "test"
-  ]
+  "dependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0"
+  }
 }

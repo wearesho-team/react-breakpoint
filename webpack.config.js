@@ -21,7 +21,7 @@ const config = {
             filename: 'index.js',
             path: path.resolve('./build'),
             publicPath: "/",
-            library: "react-criteria-table",
+            library: "react-breakpoint",
             libraryTarget: "umd",
         },
 
@@ -36,24 +36,11 @@ const config = {
         },
 
         module: {
-            loaders: [
+            rules: [
                 {
                     test: /\.tsx?$/,
                     loaders: [
-                        {
-                            loader: "babel-loader",
-                            query: {
-                                presets: [
-                                    'react',
-                                    ['env', {
-                                        "targets": {
-                                            "browsers": ["last 2 versions", "safari >= 10", "ie >= 11"]
-                                        }
-                                    }]
-                                ],
-                                "plugins": ["transform-object-rest-spread"]
-                            }
-                        },
+                        "babel-loader",
                         "awesome-typescript-loader"
                     ]
                 },
@@ -62,18 +49,7 @@ const config = {
                     exclude:
                         [/node_modules/],
                     loader:
-                        "babel-loader",
-                    query: {
-                        presets: [
-                            'react',
-                            ['env', {
-                                "targets": {
-                                    "browsers": ["last 2 versions", "safari >= 10", "ie >= 11"]
-                                }
-                            }]
-                        ],
-                        "plugins": ["transform-object-rest-spread"]
-                    }
+                        "babel-loader"
                 },
                 {
                     enforce: "pre",
